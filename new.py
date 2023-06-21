@@ -272,8 +272,8 @@ for i in range(len(rows)):
     easygui.msgbox("Check dulu datanya lengkap atau tidak. Kalau sudah yakin, klik OK untuk lanjut")
     driver.find_element(By.ID, "submitUser").click()
 
-    time.sleep(4)
+    if  not easygui.ynbox("Lanjut?"):
+        break
 
 
-
-print("Done")
+easygui.msgbox("Selesai...")
