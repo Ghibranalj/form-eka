@@ -1,15 +1,28 @@
 #!/usr/bin/env python3
-
 import openpyxl
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
 import time
+import os
+
+
+begin = input("Starting row: ")
+to = input("Ending row: ")
+data = input("Spreadsheet file: ")
+
+rows = []
+dataframe = openpyxl.load_workbook(data)
+dataframe1 = dataframe.active
+for i in dataframe1.iter_rows(
+        min_row=int(begin)+2, min_col=0, max_row=int(to)+2, max_col=71, values_only=True
+):
+    rows.append(i)
 
 driver = webdriver.Chrome()
 driver.get("http://sensus-kkp.argocipta.com/login")
-driver.find_element(By.NAME,"username").send_keys("salzaalfiana10@gmail.com")
-driver.find_element(By.ID,"password-field").send_keys("salzacantik")
+driver.find_element(By.NAME,"username").send_keys(os.environ.get("username"))
+driver.find_element(By.ID,"password-field").send_keys(os.environ.get("password"))
 driver.find_element(By.CLASS_NAME,"btn").click()
 
 def get_sumber_modal(name):
@@ -19,9 +32,6 @@ def get_sumber_modal(name):
     return "kredit"
 
 
-
-dataframe = openpyxl.load_workbook("data_eka3.xlsx")
-dataframe1 = dataframe.active
 
 def get_tanggal_lahir(NIK, gender):
     val = NIK[6:12]
@@ -69,12 +79,6 @@ def select_from_option(value, possible_values):
         if value == possible_values[i]:
             return i
     return len(possible_values) - 1
-
-rows = []
-for i in dataframe1.iter_rows(
-    min_row=30, min_col=0, max_row=58, max_col=71, values_only=True
-):
-    rows.append(i)
 
 for i in range(len(rows)):
     num = rows[i][0]
@@ -272,6 +276,8 @@ for i in range(len(rows)):
     time.sleep(5)
     driver.find_element(By.ID, "submitUser").click()
 
+    time.sleep(5)
 
-    sleep(10)
-    exit()
+
+
+print("Done")
