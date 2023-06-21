@@ -10,7 +10,7 @@ import easygui
 
 begin = easygui.enterbox("Mulai dari baris:")
 to = easygui.enterbox("Hingga baris:")
-data = easygui.fileopenbox()
+data = easygui.fileopenbox("Pilih File Excel:")
 
 rows = []
 dataframe = openpyxl.load_workbook(data)
@@ -272,7 +272,7 @@ for i in range(len(rows)):
     easygui.msgbox("Check dulu datanya lengkap atau tidak. Kalau sudah yakin, klik OK untuk lanjut")
     driver.find_element(By.ID, "submitUser").click()
 
-    time.sleep(8)
+    time.sleep(4)
 
 
 
