@@ -5,11 +5,12 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
 import time
 import os
+import easygui
 
 
-begin = input("Starting row: ")
-to = input("Ending row: ")
-data = input("Spreadsheet file: ")
+begin = easygui.enterbox("Mulai dari baris:")
+to = easygui.enterbox("Hingga baris:")
+data = easygui.fileopenbox()
 
 rows = []
 dataframe = openpyxl.load_workbook(data)
@@ -21,17 +22,16 @@ for i in dataframe1.iter_rows(
 
 driver = webdriver.Chrome()
 driver.get("http://sensus-kkp.argocipta.com/login")
-driver.find_element(By.NAME,"username").send_keys(os.environ.get("username"))
-driver.find_element(By.ID,"password-field").send_keys(os.environ.get("password"))
-driver.find_element(By.CLASS_NAME,"btn").click()
+# driver.find_element(By.NAME,"username").send_keys(os.environ.get("username"))
+# driver.find_element(By.ID,"password-field").send_keys(os.environ.get("password"))
+# driver.find_element(By.CLASS_NAME,"btn").click()
+easygui.msgbox("Login dulu, terus klik OK")
 
 def get_sumber_modal(name):
     name =  name.lower()
     if name== "sendiri" or name == "mandiri":
         return  "sendiri"
     return "kredit"
-
-
 
 def get_tanggal_lahir(NIK, gender):
     val = NIK[6:12]
@@ -268,15 +268,11 @@ for i in range(len(rows)):
     Select(driver.find_element(By.NAME, "sertifikat")).select_by_visible_text(sertifikat.title())
 
     driver.find_element(By.NAME, "penyuluh_name").send_keys(nama_penyuluh)
-    
 
-    
-    driver.save_screenshot("screenshot.png")
-
-    time.sleep(5)
+    easygui.msgbox("Check dulu datanya lengkap atau tidak. Kalau sudah yakin, klik OK untuk lanjut")
     driver.find_element(By.ID, "submitUser").click()
 
-    time.sleep(5)
+    time.sleep(8)
 
 
 
