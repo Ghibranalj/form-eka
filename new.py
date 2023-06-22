@@ -32,9 +32,7 @@ easygui.msgbox("Login dulu, terus klik OK")
 def slow_type(element, text, delay=0.0005):
     element.send_keys(" ")
     element.clear()
-    for character in text:
-        element.send_keys(character)
-        time.sleep(delay)
+    element.send_keys(text)
 
 
 def get_sumber_modal(name):
@@ -45,7 +43,8 @@ def get_sumber_modal(name):
 
 
 def get_tanggal_lahir(NIK, gender):
-    val = NIK[6:12]
+
+    val = str(NIK)[6:12]
     gender = gender.lower()
     date = int(val[0:2])
     month = int(val[2:4])
@@ -101,7 +100,7 @@ for i in range(len(rows)):
     kelompok = rows[i][16]
     biota = rows[i][17]
     komoditas = rows[i][15]
-    NIK = rows[i][2]
+    NIK = str(rows[i][2])
     gender = rows[i][5]
     agama = rows[i][4]
     nama = rows[i][1]
@@ -219,7 +218,7 @@ for i in range(len(rows)):
 
     Select(driver.find_element(By.NAME, "kelompok_id")).select_by_visible_text(kelompok)
     Select(driver.find_element(By.NAME, "biota_id")).select_by_visible_text(biota)
-    time.sleep(2)
+    time.sleep(5)
     Select(driver.find_element(By.NAME, "ikan_id")).select_by_visible_text(
         komoditas.title()
     )
